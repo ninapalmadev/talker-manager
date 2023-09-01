@@ -1,9 +1,8 @@
 const express = require('express');
-const fs = require('fs').promises;
+const talkerRouter = require('./routers/talkerRouter');
 
 const app = express();
 app.use(express.json());
-console.log(fs);
 
 const HTTP_OK_STATUS = 200;
 const PORT = process.env.PORT || '3001';
@@ -12,6 +11,8 @@ const PORT = process.env.PORT || '3001';
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
+
+app.use('/talker', talkerRouter);
 
 app.listen(PORT, () => {
   console.log('Online');
