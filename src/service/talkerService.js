@@ -13,6 +13,13 @@ const talkerService = async () => {
   }
 };
 
+const talkerServiceId = async (id) => {
+  const talkers = await talkerService();
+  const talker = talkers.find((element) => element.id === Number(id));
+  return talker;
+};
+
 module.exports = { 
   talkerService,  
+  talkerServiceId,
 };
