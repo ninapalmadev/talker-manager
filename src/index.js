@@ -1,7 +1,9 @@
 const express = require('express');
+const fs = require('fs').promises;
 
 const app = express();
 app.use(express.json());
+console.log(fs);
 
 const HTTP_OK_STATUS = 200;
 const PORT = process.env.PORT || '3001';
