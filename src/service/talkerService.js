@@ -19,7 +19,18 @@ const talkerServiceId = async (id) => {
   return talker;
 };
 
+const readFile = async () => {
+  const result = await fs.readFile(talkerPath, 'utf-8');
+  return JSON.parse(result);
+};
+
+const writeFile = async (data) => {
+  await fs.writeFile(talkerPath, JSON.stringify(data, null, 2));
+};
+
 module.exports = { 
   talkerService,  
   talkerServiceId,
+  readFile,
+  writeFile,
 };

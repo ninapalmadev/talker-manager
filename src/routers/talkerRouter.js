@@ -1,5 +1,11 @@
 const express = require('express');
-const { talkerService, talkerServiceId } = require('../service/talkerService');
+const { talkerService, talkerServiceId, readFile, writeFile } = require('../service/talkerService');
+const { authTalker, 
+  talkerName, 
+  talkerAge, 
+  talkerTalk,
+  talkerWatchedAt,
+  talkerRate } = require('../middlewares/validateTalker');
 
 const router = express.Router();
 
@@ -20,6 +26,16 @@ router.get('/:id', async (req, res) => {
   } else {
     res.status(200).json(talker);
   }
+});
+
+router.post('/', authTalker, talkerName, talkerAge, talkerTalk, 
+talkerWatchedAt, talkerRate, async (req, res) => {
+  const talkers = await readFile();
+  const id = talkers.length + 1;
+  const talker = { id, ...req.body };
+  talkers.push(talker);
+  await writeFile(talkers);
+  res.status(201).json(talker);
 });
 
 module.exports = router;
