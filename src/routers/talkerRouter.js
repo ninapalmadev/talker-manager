@@ -38,4 +38,19 @@ talkerWatchedAt, talkerRate, async (req, res) => {
   res.status(201).json(talker);
 });
 
+router.put('/:id', authTalker, talkerName, talkerAge, talkerTalk,
+talkerWatchedAt, talkerRate, async (req, res) => {
+  const { id } = req.params;
+  const talkers = await readFile();
+  const talkerIndex = talkers.findIndex((element) => element.id === Number(id));
+  if (talkerIndex === -1) {
+    res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  } else {
+    const talker = { id: Number(id), ...req.body };
+    talkers[talkerIndex] = talker;
+    await writeFile(talkers);
+    res.status(200).json(talker);
+  }
+});
+
 module.exports = router;
