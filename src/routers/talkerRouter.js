@@ -53,4 +53,13 @@ talkerWatchedAt, talkerRate, async (req, res) => {
   }
 });
 
+router.delete('/:id', authTalker, async (req, res) => {
+  const { id } = req.params;
+  const talkers = await readFile();
+  const talkerIndex = talkers.findIndex((element) => element.id === Number(id));
+  talkers.splice(talkerIndex, 1);
+  await writeFile(talkers);
+  return res.status(204).json();
+});
+
 module.exports = router;
